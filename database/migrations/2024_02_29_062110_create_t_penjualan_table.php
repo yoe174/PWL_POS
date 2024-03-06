@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id('penjualan_id');
             $table->unsignedBigInteger('user_id')->index(); // index untuk foreignkey
             $table->string('pembeli', 50); 
-            $table->string('penjual_kode', 20);
+            $table->string('penjualan_kode', 20);
             $table->dateTime('penjualan_tanggal');
 
             $table->foreign('user_id')->references('user_id')->on('m_user');
