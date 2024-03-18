@@ -10,6 +10,12 @@ class UserController extends Controller
 {
     public function index()
     {
+        // Praktikum 2.7
+        $user = UserModel::with('level')->get();
+        // dd($user);
+        return view('user',['data' => $user]);
+
+
         // $user = UserModel::all();
         // return view('user',['data' => $user]);
 
@@ -152,8 +158,8 @@ class UserController extends Controller
         //     dd($user->wasChanged(['username','level_id'])); // true
                 
         // Praktikum 2.6
-        $user = UserModel::all();
-        return view('user',['data' => $user]);
+        // $user = UserModel::all();
+        // return view('user',['data' => $user]);
     }
 
     public function tambah(){
