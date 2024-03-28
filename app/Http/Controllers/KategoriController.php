@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DataTables\KategoriDataTable;
 use App\Models\KategoriModel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePostRequest;
 
 class KategoriController extends Controller
 {
@@ -40,14 +42,14 @@ class KategoriController extends Controller
         return view('kategori.create');
     }
 
-    public function store(Request $request)
-    {
-        KategoriModel::create([
-            'kategori_kode' => $request->kodeKategori,
-            'kategori_nama' => $request->namaKategori,
-        ]);
-        return redirect('/kategori');
-    }
+    // public function store(Request $request)
+    // {
+    //     KategoriModel::create([
+    //         'kategori_kode' => $request->kodeKategori,
+    //         'kategori_nama' => $request->namaKategori,
+    //     ]);
+    //     return redirect('/kategori');
+    // }
 
     public function edit($id)
     {
@@ -70,6 +72,35 @@ class KategoriController extends Controller
         $kategori->delete();
         return redirect('/kategori');
     }
-    
+
+    // praktikum 2 js6
+    // public function store(Request $request) : RedirectResponse
+    // {
+    //     $validated = $request->validate([
+    //         'kategori_kode' => $request->kodeKategori,
+    //         'kategori_nama' => $request->namaKategori,
+    //     ]);
+    //     return redirect('/kategori');
+    // }
+
+    // public function store(Request $request) : RedirectResponse
+    // {
+    //     $validated = $request->validate([
+    //         'kodeKategori' => 'bail|required|unique: m_kategori',
+    //         'namaKategori' => 'bail|required',
+    //     ]);
+    //     return redirect('/kategori');
+    // }
+
+    // praktikum C js6
+    public function store(StorePostRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $validated = $request->safe()->only(['kategori_kode', 'kategori_nama']);
+        $validated = $request->safe()->except(['kategori_kode', 'kategori_nama']);
+
+        return redirect('/kategori');
+    }
 }
 

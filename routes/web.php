@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () {
     return view('welcome');
+    // return view('welcome2');
 });
 
 Route::get('/level', [LevelController::class, 'index']);
@@ -47,3 +49,11 @@ Route::put('/kategori/edit_simpan/{id}', [KategoriController::class, 'edit_simpa
 
 // tugas 4 js5
 Route::get('/kategori/hapus/{id}', [KategoriController::class, 'hapus'])->name('kategori.hapus');
+
+// A.JS 6
+// Routing Form User dan Level
+Route::get('/formUser', [UserController::class, 'formUser']);
+Route::get('/formLevel', [UserController::class, 'formLevel']);
+
+// D.JS 6
+Route::resource('m_user', POSController::class);
