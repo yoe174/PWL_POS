@@ -261,4 +261,143 @@ class UserController extends Controller
             ->rawColumns(['aksi']) //memberitahu bahwa kolom aksi adalah html
             ->make(true);
     }
+
+    // JS7 Prak 3 no 8
+    // menampilkan halamanan form tambah user
+    public function create()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Tambah User',
+            'list'  => ['Home', 'User', 'Tambah']
+        ];
+
+        $page = (object) [
+            'title' => 'Tambah user baru'
+        ];
+
+        $level = LevelModel::all();
+        $activeMenu = 'user';
+
+        return view('user.create', 
+        [
+            'breadcrumb' => $breadcrumb, 
+            'page' => $page,
+            'level' => $level,
+            'activeMenu' => $activeMenu
+        ]);
+    }
+
+    // JS7 Prak 3 no 11
+    // menyimpan data baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            //Username harus diisi, berupa string, minimal 3 karakter, dan bernilai unik ditabel m_user kolom username
+            'username' => 'required|string|min:3|unique:m_user,username',
+            'nama'     => 'required|string|max:100',        //nama harus diisi, berupa string, da maksimal 100 karakter
+            'password' => 'required|min:5',                 //password harus diisi dan minimal 5 katakter
+            'level_id' => 'required|integer'                // level_id harus diisi dan berupa angka
+        ]);
+
+        UserModel::create([
+            'username' => $request->username,
+            'nama'     => $request->nama,
+            'password' => bcrypt($request->password),       //password dienkipsi sebelum disimpan
+            'level_id' => $request->level_id
+        ]);
+        return redirect('/user')->with('success', 'Data user berhasil disimpan');
+    }
+
+    // JS7 Prak 3 no 14
+    //Menampilkan detail User
+    public function show(String $id)
+    {
+        $user = UserModel::with('level')->find($id);
+
+        $breadcrumb = (object) [
+            'title' => 'Detail User',
+            'list'  => ['Home', 'User', 'Detail']
+        ];
+
+        $page = (object) [
+            'title' => 'Detail User'
+        ];
+
+        $activeMenu = 'user';       //set menu yang sedang aktif
+        return view('user.show', 
+        [
+            'breadcrumb' => $breadcrumb,
+            'page'       => $page,
+            'user'       => $user,
+            'activeMenu' => $activeMenu
+        ]);
+    }
+
+    // JS7 Prak 3 no 18
+    // Menampilkan halaman form edit data
+    public function edit(String $id)
+    {
+        $user = UserModel::find($id);
+        $level = LevelModel::all();
+
+        $breadcrumb = (object) [
+            'title' => 'Edit User',
+            'list'  => ['Home', 'User', 'Edit']
+        ];
+
+        $page = (object) [
+            'title' => 'Edit user'
+        ];
+
+        $activeMenu = 'user'; //set menu yang sedang aktif
+
+        return view('user.edit', [
+            'user' => $user,
+            'level' => $level,
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'activeMenu' => $activeMenu
+        ]);
+    }
+
+    //Menyimpan perubahan data user
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            //username harus didisi, berupa string, minimal 3 karakter,
+            //dan bernilai unik ditabel m_users kolom user kecuali untuk user dengan id yang sedang diedit
+            'username' => 'required|string|min:3|unique:m_user,username, '.$id.',user_id',
+            'nama'     => 'required|string|max:100',
+            'password' => 'nullable|min:5',
+            'level_id' => 'required|integer'
+        ]);
+
+        UserModel::find($id)->update([
+            'username' => $request->username,
+            'nama'     => $request->nama,
+            'password' => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
+            'level_id' => $request->level_id
+        ]);
+
+        return redirect('/user')->with('success', 'Data user berhasil diubah');
+    }
+
+    //Menghapus data user
+    public function destroy(string $id)
+    {
+        $check = UserModel::find($id);
+        if (!$check) {      //untuk mengecek apakah data user dengan id yang dimaksud ada atau tidak
+            return redirect('/user')->with('error', 'Data user tidak ditemukan');
+        }
+
+        try{
+            UserModel::destroy($id);    //Hapus data level
+
+            return redirect('/user')->with('seccess', 'Data user berhasil dihapus');
+        }catch (\Illuminate\Database\QueryException $e){
+
+            //Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
+            return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkai dengan data ini');
+        }
+    }
 }
