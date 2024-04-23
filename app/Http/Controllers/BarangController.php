@@ -66,7 +66,7 @@ class BarangController extends Controller
     {
         $request->validate([
             'barang_kode' => 'required|string|max:10',
-            'barang_nama' => 'required|string|max:100|unique:m_barangs,barang_nama',
+            'barang_nama' => 'required|string|max:100|unique:m_barang,barang_nama',
             'harga_beli'     => 'required|integer',
             'harga_jual'     => 'required|integer',
             'kategori_id' => 'required|integer'
@@ -136,7 +136,7 @@ class BarangController extends Controller
     {
         $request->validate([
             'barang_kode' => 'required|string|max:10',
-            'barang_nama' => 'required|string|max:100|unique:m_barangs,barang_nama',
+            'barang_nama' => 'required|string|max:100|unique:m_barang,barang_nama',
             'harga_beli'     => 'required|integer',
             'harga_jual'     => 'required|integer',
             'kategori_id' => 'required|integer'

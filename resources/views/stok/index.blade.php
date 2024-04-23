@@ -23,10 +23,10 @@
                             <select class="form-control" id="stok_id" name="stok_id" required>
                                 <option value="">- Semua -</option>
                                 @foreach($stok as $item)
-                                    <option value="{{ $item->stok_id }}">{{ $item->barang_id }}</option>
+                                    <option value="{{ $item->stok_id }}">{{ $item->stok_id }}</option>
                                 @endforeach
                             </select>
-                            <small class="Form-text text-muted">Stok</small>
+                            <small class="Form-text text-muted">Stok ID</small>
                         </div>
                     </div>
                 </div>

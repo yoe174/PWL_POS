@@ -32,13 +32,13 @@ class TransaksiPenjualanController extends Controller
     // Ambil data barang dalam bentuk json untuk datatables 
     public function list(Request $request)
     {
-        $penjualans = TransaksiPenjualanModel::select('penjualan_id', 'user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal')->with('user');
+        $penjualan = TransaksiPenjualanModel::select('penjualan_id', 'user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal')->with('user');
 
         //Filter data barang berdasarkan level_id
         if ($request->user_id) {
-            $penjualans->where('user_id', $request->user_id);
+            $penjualan->where('user_id', $request->user_id);
         }
-        return DataTables::of($penjualans)
+        return DataTables::of($penjualan)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
             ->addColumn('aksi', function ($penjualan) { // menambahkan kolom aksi
                 $btn = '<a href="' . url('/penjualan/' . $penjualan->penjualan_id) . '" class="btn btn-info btn-sm">Detail</a> ';
@@ -78,7 +78,7 @@ class TransaksiPenjualanController extends Controller
         $request->validate([
             'user_id' => 'required|integer',
             'pembeli' => 'required|string|max:50',
-            'penjualan_kode' => 'required|string|max:20|unique:t_penjualans,penjualan_kode',
+            'penjualan_kode' => 'required|string|max:20|unique:t_penjualan,penjualan_kode',
             'penjualan_tanggal' => 'required|date_format:Y-m-d H:i:s',
             'barang_id' => 'required|integer',
             'harga' => 'required|integer',
@@ -169,7 +169,7 @@ class TransaksiPenjualanController extends Controller
         $request->validate([
             'user_id' => 'required|integer',
             'pembeli' => 'required|string|max:255',
-            'penjualan_kode' => 'required|string|max:255|unique:t_penjualans,penjualan_kode,' . $id . ',penjualan_id',
+            'penjualan_kode' => 'required|string|max:255|unique:t_penjualan,penjualan_kode,' . $id . ',penjualan_id',
             'penjualan_tanggal' => 'required|date_format:Y-m-d\TH:i',
             'barang_id' => 'required|integer',
             'harga' => 'required|numeric',

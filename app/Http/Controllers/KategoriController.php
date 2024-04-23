@@ -29,7 +29,7 @@ class KategoriController extends Controller
             'breadcrumb' => $breadcrumb,
             'page' => $page,
             'activeMenu' => $activeMenu
-        ]);
+        ] , compact('kategori')) ;
     }
 
     public function list(Request $request)
@@ -72,7 +72,7 @@ class KategoriController extends Controller
     {
         $request->validate([
 
-            'kategori_kode' => 'bail|required|unique:m_kategoris|max:255',
+            'kategori_kode' => 'bail|required|unique:m_kategori|max:255',
             'kategori_nama' => 'bail|required|max:255',
 
         ]);
@@ -127,10 +127,8 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            //kategori kode harus didisi, berupa string, minimal 3 karakter,
-            //dan bernilai unik ditabel m_kategoris kolom kategori kecuali untuk katgeori dengan id yang sedang diedit
             'kategori_kode' => 'bail|required|max:255',
-            'kategori_nama' => 'bail|required|unique:m_kategoris|max:255',
+            'kategori_nama' => 'bail|required|unique:m_kategori|max:255',
         ]);
 
         KategoriModel::find($id)->update([

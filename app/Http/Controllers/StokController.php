@@ -27,7 +27,7 @@ class StokController extends Controller
             'page' => $page,
             'stok' => $stok,
             'activeMenu' => $activeMenu
-        ]);
+        ]  , compact('stok'));
     }
 
     public function list(Request $request)
@@ -116,8 +116,6 @@ class StokController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            //kategori kode harus didisi, berupa string, minimal 3 karakter,
-            //dan bernilai unik ditabel m_kategoris kolom kategori kecuali untuk katgeori dengan id yang sedang diedit
             'barang_id' => 'bail|required|max:255',
             'user_id' => 'bail|required|max:255',
             'stok_tanggal' => 'bail|required|max:255',

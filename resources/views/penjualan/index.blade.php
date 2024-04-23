@@ -23,10 +23,10 @@
                             <select class="form-control" id="user_id" name="user_id" required>
                                 <option value="">- Semua -</option>
                                 @foreach($user as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    <option value="{{ $item->user_id }}">{{ $item->username }}</option>
                                 @endforeach
                             </select>
-                            <small class="Form-text text-muted">Nama User</small>
+                            <small class="Form-text text-muted">Username</small>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <thead>
                     <tr>
                         <th>ID Penjualan</th>
-                        <th>User</th>
+                        <th>Username</th>
                         <th>Pembeli</th>
                         <th>Kode Penjualan</th>
                         <th>Tanggal Penjualan</th>

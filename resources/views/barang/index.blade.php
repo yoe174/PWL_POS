@@ -71,7 +71,7 @@
                         orderable: false,
                         searchable: false
                     }, {
-                        data: "kategori.kategori_id",
+                        data: "kategori.kategori_nama",
                         className: "",
                         orderable: true,        //jika ingin kolom bisa urut
                         searchable: true        // jika kolom bisa dicari

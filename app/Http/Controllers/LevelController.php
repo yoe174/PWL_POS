@@ -80,7 +80,7 @@ class LevelController extends Controller
     {
         $request->validate([
             'level_kode'     => 'required|max:255',
-            'level_nama'     => 'required|unique:m_levels|max:255',
+            'level_nama'     => 'required|unique:m_level|max:255',
         ]);
 
         LevelModel::create([
@@ -147,7 +147,7 @@ class LevelController extends Controller
             //levelname harus didisi, berupa string, minimal 3 karakter,
             //dan bernilai unik ditabel m_levels kolom level kecuali untuk level dengan id yang sedang diedit
             'level_kode'     => 'required|max:255',
-            'level_nama'     => 'required|unique:m_levels|max:255',
+            'level_nama'     => 'required|unique:m_level|max:255',
 
         ]);
 

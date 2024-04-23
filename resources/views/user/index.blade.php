@@ -92,7 +92,7 @@
           ] 
       });
 
-      $('#level_id').on('changes', function() {
+      $('#level_id').on('change', function() {
         dataUser.ajax.reload();
       }); 
       
