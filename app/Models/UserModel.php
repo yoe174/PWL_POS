@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 // class UserModel extends Model
 class UserModel extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    // use HasFactory;
+    use Notifiable;
 
     public function getJWTIdentifier()
     {
@@ -23,9 +26,12 @@ class UserModel extends Authenticatable implements JWTSubject
         return [];
     }
 
+    use HasFactory;
+
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
-
+    public $timestamps = false;
+    
     // protected $fillable = ['level_id','username','nama','password'];
     // D JS.6
     protected $fillable = [
