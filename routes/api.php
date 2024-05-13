@@ -61,3 +61,7 @@ Route::middleware('auth.api')->group(function () {
     Route::put('barang/{barang}', [BarangController::class, 'update']);
     Route::delete('barang/{barang}', [BarangController::class, 'destroy']);
 });
+
+// js_11
+// Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::post('/register1', RegisterController::class)->name('register1');

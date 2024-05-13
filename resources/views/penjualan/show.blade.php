@@ -33,9 +33,9 @@
                 <th>Tanggal Penjualan</th>
                 <td>{{ $penjualan->penjualan_tanggal }}</td>
             </tr>
-            <tr>
-                <th colspan="2">Detail Transaksi Penjualan</th>
-            </tr>
+        </table>
+        <br><br>
+        <table class="table table-bordered table-striped table-hover table-sm">
             <tr>
                 <th>ID Barang</th>
                 <th>Harga</th>
