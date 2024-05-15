@@ -28,7 +28,7 @@ class BarangController extends Controller
     // Ambil data barang dalam bentuk json untuk datatables 
     public function list(Request $request)
     {
-        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')->with('kategori');
+        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'image')->with('kategori');
 
         //Filter data barang berdasarkan level_id
         if ($request->kategori_id) {
@@ -69,15 +69,21 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100|unique:m_barang,barang_nama',
             'harga_beli'     => 'required|integer',
             'harga_jual'     => 'required|integer',
-            'kategori_id' => 'required|integer'
+            'kategori_id' => 'required|integer',
+            'image'      => 'required|max:5000'
         ]);
+
+        $extFile = $request->file('image')->getClientOriginalName();
+        $namaFile = time() . "." . $extFile;
+        $request->file('image')->move('storage/barangGambar', $namaFile);
 
         BarangModel::create([
             'barang_kode' => $request->barang_kode,
             'barang_nama' => $request->barang_nama,
             'harga_jual' => $request->harga_jual,
             'harga_beli' => $request->harga_beli,
-            'kategori_id' => $request->kategori_id
+            'kategori_id' => $request->kategori_id,
+            'image'      => $namaFile
         ]);
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
     }

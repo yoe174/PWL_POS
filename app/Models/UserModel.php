@@ -36,14 +36,14 @@ class UserModel extends Authenticatable implements JWTSubject
     
     // protected $fillable = ['level_id','username','nama','password'];
     // D JS.6
-    // protected $fillable = [
-    //     'user_id',
-    //     'level_id',
-    //     'username',
-    //     'nama',
-    //     'password',
-    //     'image' // tambahan
-    // ];
+    protected $fillable = [
+        'user_id',
+        'level_id',
+        'username',
+        'nama',
+        'password',
+        'image' // tambahan
+    ];
 
     protected $guarded = [];
     
@@ -54,7 +54,7 @@ class UserModel extends Authenticatable implements JWTSubject
 
     protected function image() : Attribute {
         return Attribute::make(
-            get: fn ($image) => url('/storage/posts/' . $image),
+            get: fn ($image) => url('/storage/userGambar/' . $image),
         );
     }
 }

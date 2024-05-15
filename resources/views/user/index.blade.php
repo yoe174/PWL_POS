@@ -36,6 +36,7 @@
             <tr>
                 <th>ID</th>
                 <th>Username</th>
+                <th>Profil</th>
                 <th>Nama</th>
                 <th>Level Pengguna</th>
                 <th>Aksi</th>
@@ -73,6 +74,13 @@
               className: "", 
               orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan 
               searchable: true    // searchable: true, jika ingin kolom ini bisa dicari 
+            },{ 
+              data: "image",                
+              className: "", 
+              orderable: false,    
+              render: function(data, type, full, meta) {
+                        return data ? '<img src="' + data + '"width="150px">' : '';
+                    }
             },{ 
               data: "nama",                
               className: "", 
